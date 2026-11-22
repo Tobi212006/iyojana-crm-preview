@@ -15,15 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - run: npm install --no-audit --no-fund
-      - run: npm run build
+      - name: Build shareable iYojana demo
+        run: |
+          mkdir -p site
+          cp public/demo.html site/index.html
+          cp public/demo.html site/demo.html
+          test -s site/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
   deploy:
     environment:
       name: github-pages
